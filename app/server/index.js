@@ -8,6 +8,7 @@ connection.connect((error) => {
         console.log(error);
     } else {
         TableUser.init(connection);
+        TableSchedule.init(connection);
 
         const app = customExpress();
 

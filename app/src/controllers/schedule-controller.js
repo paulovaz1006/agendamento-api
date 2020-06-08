@@ -12,8 +12,8 @@ class ScheduleController {
 
     scheduling(req, res) {
         const id = req.params.id;
-        const method = req.method;
-        ScheduleModel.scheduling(data, method, res);
+        const method = req.method.toLowerCase();
+        ScheduleModel.scheduling(data, id, method, res);
     }
 }
 

@@ -22,10 +22,13 @@ class UserModel {
                     res.status(400).json({error, message: 'Este e-mail ja foi utilizado'});
                 } else {
                     res.status(400).json({error, message: 'Erro ao cadastrar'});
-                }  
+                }
                 console.log(error)
             } else {
-                res.status(200).json({message: 'Cadastro realizado com sucesso!'});
+                res.status(200).json({
+                    user:data,
+                    message: 'Cadastro realizado com sucesso!'
+                });
             }
         });
     }
@@ -76,8 +79,8 @@ class UserModel {
                 } else {
                     return resolve(response);
                 }
-            }); 
-        })        
+            });
+        })
     }
 
 }

@@ -28,27 +28,23 @@ class ScheduleModel {
     scheduling(data, id, method, res) {
         let sql;
         let infoSchedule;
-        let idSchedule;
 
         switch(method) {
             case 'get':
-                sql = 'SELECT * FROM schedule WHERE id_schedule = ?';
-                infoSchedule = null;
-                idSchedule = id;
+                sql = `SELECT * FROM schedule WHERE id_schedule = ?`;
+                infoSchedule = id;
                 break;
             case 'delete':
-                sql = 'SELECT * FROM schedule WHERE id_schedule = ?';
-                infoSchedule = null;
-                idSchedule = id;
-                break; 
+                sql = `DELETE FROM schedule WHERE id_schedule = ?`;
+                infoSchedule = id;
+                break;
             case 'patch':
-                sql = 'UPDATE schedule SET ? WHERE id_user = ?';
-                infoSchedule = data;
-                idSchedule = id;
-                break;                       
-        }        
+                sql = 'UPDATE schedule SET ? WHERE id_schedule = ?';
+                infoSchedule = [ data, id ];
+                break;
+        }
 
-        connection.query(sql, [ infoSchedule, idSchedule ], (error) => {
+        connection.query(sql, infoSchedule, (error) => {
             if (error) {
                 console.log(error);
             } else {
