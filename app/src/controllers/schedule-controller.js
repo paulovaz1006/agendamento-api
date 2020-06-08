@@ -1,6 +1,19 @@
+const ScheduleModel = require('../models/schedule-model');
+
 class ScheduleController {
-    allSchedule(req, res) {
-        res.send('ola')
+    allSchedule(res) {
+        ScheduleModel.allSchedule(res);
+    }
+
+    registerScheduling(req, res) {
+        const data = req.body;
+        ScheduleModel.registerScheduling(data, res);
+    }
+
+    scheduling(req, res) {
+        const id = req.params.id;
+        const method = req.method;
+        ScheduleModel.scheduling(data, method, res);
     }
 }
 

@@ -1,13 +1,14 @@
+require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
 const consign = require('consign');
+const bodyParser = require('body-parser');
 
 module.exports = () => {
     const app = express();
 
     app.use(
-        bodyParser.urlenconded({
-            extends: true
+        bodyParser.urlencoded({
+            extended: true
         })
     )
 
@@ -16,7 +17,7 @@ module.exports = () => {
     )
 
     consign()
-        .include('../src/routes')
+        .include('./app/src/routes')
         .into(app)
 
     return app;

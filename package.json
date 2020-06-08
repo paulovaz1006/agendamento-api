@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,13 +17,21 @@
     "url": "https://github.com/paulovaz1006/agendamento-api/issues"
   },
   "homepage": "https://github.com/paulovaz1006/agendamento-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.26.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.4",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0"
   }
 }
