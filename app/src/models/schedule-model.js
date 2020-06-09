@@ -31,8 +31,24 @@ class ScheduleModel {
 
         switch(method) {
             case 'get':
-                sql = `SELECT * FROM schedule WHERE id_schedule = ?`;
-                infoSchedule = id;
+                sql = `SELECT  
+                    schedule.id_schedule,
+                    schedule.title,
+                    schedule.description,
+                    schedule.date,
+                    schedule.service,
+                    schedule.id_user,
+                    users.full_name,
+                    users.phone,
+                    users.email,
+                    users.rg,
+                    users.cpf,
+                    users.address,
+                    users.city 
+                    FROM schedule INNER JOIN users 
+                    WHERE schedule.id_schedule = ? 
+                    GROUP BY schedule.id_schedule`;
+                infoSchedule = id;                
                 break;
             case 'delete':
                 sql = `DELETE FROM schedule WHERE id_schedule = ?`;
@@ -44,13 +60,13 @@ class ScheduleModel {
                 break;
         }
 
-        connection.query(sql, infoSchedule, (error) => {
+        connection.query(sql, infoSchedule, (error, response) => {
             if (error) {
                 console.log(error);
             } else {
-                res.status(200).json({message: 'Cadastrado com sucesso'});
+                res.status(200).json(response);
             }
-        })
+        });
     }
 }
 

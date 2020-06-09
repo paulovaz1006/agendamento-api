@@ -2,6 +2,7 @@ const customExpress = require('../config/custom-express');
 const connection = require('../database/connection');
 const TableSchedule = require('../database/table-schedule');
 const TableUser = require('../database/table-user');
+const TableTypeUser = require('../database/table-type-user');
 
 connection.connect((error) => {
     if (error) {
@@ -9,6 +10,7 @@ connection.connect((error) => {
     } else {
         TableUser.init(connection);
         TableSchedule.init(connection);
+        TableTypeUser.init(connection);
 
         const app = customExpress();
 
