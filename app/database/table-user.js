@@ -16,7 +16,9 @@ class TableUser {
             address varchar(250) NOT NULL,
             city varchar(250) NOT NULL,
             type_user INT NOT NULL,
-            FOREIGN KEY(type_user) REFERENCES type_user(id_type)     
+            id_company INT NOT NULL,
+            FOREIGN KEY(type_user) REFERENCES type_user(id_type),     
+            FOREIGN KEY(id_company) REFERENCES company(id_company)     
         )`;
 
         this.connection.query(sql, error => {

@@ -1,8 +1,9 @@
 const ScheduleModel = require('../models/schedule-model');
 
 class ScheduleController {
-    allSchedule(res) {
-        ScheduleModel.allSchedule(res);
+    allSchedule(req, res) {
+        const id = req.params.id_user;
+        ScheduleModel.allSchedule(id, res);
     }
 
     registerScheduling(req, res) {

@@ -1,10 +1,26 @@
 const connection = require('../../database/connection');
 
 class ScheduleModel {
-    allSchedule(res) {
-        const sql = 'SELECT * FROM schedule';
+    allSchedule(id, res) {
+        const sql = `SELECT  
+        schedule.id_schedule,
+        schedule.title,
+        schedule.description,
+        schedule.date,
+        schedule.service,
+        schedule.id_user,
+        users.full_name,
+        users.phone,
+        users.email,
+        users.rg,
+        users.cpf,
+        users.address,
+        users.city 
+        FROM schedule INNER JOIN users 
+        WHERE users.id_user = ? 
+        GROUP BY schedule.id_schedule`;
 
-        connection.query(sql, (error, response) => {
+        connection.query(sql, id, (error, response) => {
             if (error) {
                 console.log(error);
             } else {

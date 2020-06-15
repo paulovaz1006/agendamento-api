@@ -1,0 +1,24 @@
+class TableService {
+
+    init(connection) {
+        this.connection = connection;
+        this.company();
+    }
+
+    company() {
+        const sql = `CREATE TABLE IF NOT EXISTS service (
+                id_service int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+                service varchar(250) NOT NULL,                               
+                id_company INT NOT NULL,
+                FOREIGN KEY(id_company) REFERENCES company(id_company)
+            )`;
+
+        this.connection.query(sql, error => {
+            if (error) {
+                console.log(error)
+            }
+        });
+    }    
+}
+
+module.exports = new TableService;

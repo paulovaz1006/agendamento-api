@@ -9,7 +9,7 @@ class TableTypeUser {
     typeUser() {
         const sql = `CREATE TABLE IF NOT EXISTS type_user (
                 id_type int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-                name varchar(50) NOT NULL UNIQUE                
+                type_user varchar(50) NOT NULL UNIQUE                
             )`;
 
         this.connection.query(sql, error => {
@@ -20,11 +20,11 @@ class TableTypeUser {
     }    
 
     insertTypeUser() {
-        const sql = `INSERT IGNORE INTO type_user (name)
+        const sql = `INSERT IGNORE INTO type_user (type_user)
             VALUES 
             ('cliente'), 
             ('empresa') 
-            ON DUPLICATE KEY UPDATE name=VALUES(name)`;        
+            ON DUPLICATE KEY UPDATE type_user=VALUES(type_user)`;        
 
         this.connection.query(sql, error => {
             if (error) {
