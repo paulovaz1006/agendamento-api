@@ -7,9 +7,9 @@ module.exports = app => {
         .post((req, res) => UserController.registerUser(req, res));
     
     app.route('/user/:id')
-        .get((req, res) => UserController.getUser(req, res))        
-        .patch((req, res) => UserController.alterUser(req, res))
-        .delete((req, res) => UserController.deleteUser(req, res));
+        .get(passport.authenticate('bearer', { session: false }), (req, res) => UserController.getUser(req, res))        
+        .patch(passport.authenticate('bearer', { session: false }), (req, res) => UserController.alterUser(req, res))
+        .delete(passport.authenticate('bearer', { session: false }), (req, res) => UserController.deleteUser(req, res));
 
     app.route('/login')
         .post(passport.authenticate('local', { session: false }), 

@@ -1,32 +1,39 @@
 const connection = require('../../database/connection');
-
 class ScheduleModel {
     allSchedule(id, res) {
-        const sql = `SELECT  
-        schedule.id_schedule,
-        schedule.title,
-        schedule.description,
-        schedule.date,
-        schedule.service,
-        schedule.id_user,
-        users.full_name,
-        users.phone,
-        users.email,
-        users.rg,
-        users.cpf,
-        users.address,
-        users.city 
-        FROM schedule INNER JOIN users 
-        WHERE users.id_user = ? 
-        GROUP BY schedule.id_schedule`;
-
-        connection.query(sql, id, (error, response) => {
-            if (error) {
-                console.log(error);
-            } else {
-                res.status(200).json(response);
-            }
-        })
+        return new Promise ((resolve, reject) => {
+            const sql = `SELECT  
+            schedule.id_schedule,
+            schedule.title,
+            schedule.description,
+            schedule.date,
+            schedule.id_user,
+            schedule.id_service,
+            schedule.id_company,
+            users.full_name,
+            users.phone,
+            users.email,
+            users.rg,
+            users.cpf,
+            users.address,
+            users.city,
+            company.name,
+            service.service 
+            FROM schedule 
+            INNER JOIN users             
+            INNER JOIN company             
+            INNER JOIN service
+            WHERE users.id_company = ? 
+            GROUP BY schedule.id_schedule`;
+    
+            connection.query(sql, id, (error, response) => {
+                if (error) {
+                    reject('Agendamentos não encontrado');
+                } else {
+                    resolve(res.status(200).json(response));
+                }
+            });
+        });        
     }
 
     registerScheduling(data, res) {
@@ -47,21 +54,27 @@ class ScheduleModel {
 
         switch(method) {
             case 'get':
-                sql = `SELECT  
+                sql = `SELECT   
                     schedule.id_schedule,
                     schedule.title,
                     schedule.description,
                     schedule.date,
-                    schedule.service,
                     schedule.id_user,
+                    schedule.id_service,
+                    schedule.id_company,
                     users.full_name,
                     users.phone,
                     users.email,
                     users.rg,
                     users.cpf,
                     users.address,
-                    users.city 
-                    FROM schedule INNER JOIN users 
+                    users.city,
+                    company.name,
+                    service.service 
+                    FROM schedule 
+                    INNER JOIN users             
+                    INNER JOIN company             
+                    INNER JOIN service
                     WHERE schedule.id_schedule = ? 
                     GROUP BY schedule.id_schedule`;
                 infoSchedule = id;                
@@ -87,3 +100,4 @@ class ScheduleModel {
 }
 
 module.exports = new ScheduleModel;
+

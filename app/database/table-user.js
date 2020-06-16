@@ -14,6 +14,7 @@ class TableUser {
             rg varchar(9),
             cpf varchar(11) NOT NULL,
             address varchar(250) NOT NULL,
+            number varchar(250),
             city varchar(250) NOT NULL,
             type_user INT NOT NULL,
             id_company INT NOT NULL,

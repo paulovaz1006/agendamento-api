@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const UserModel = require('../models/user-model');
+const CompanyController = require('./company-controller');
 
 class UserController {
     allUser(res) {
@@ -8,12 +9,20 @@ class UserController {
     }
 
     async registerUser(req, res) {
-        const data = req.body;
-        const newPassword =  await UserController.generatePassword(req.body.password);
+        const company = req.body.company.toLowerCase();
+        const searchCompany = await CompanyController.searchCompany(company, res);     
 
-        req.body.password = newPassword;
+        if (searchCompany) {
+            const newPassword =  await UserController.generatePassword(req.body.password);
+            const data = req.body;
 
-        UserModel.registerUser(data, res);
+            req.body.password = newPassword;
+
+            data['id_company'] = searchCompany.id_company;
+            delete data['company'];            
+            
+            UserModel.registerUser(data, res);
+        }
     }
 
     getUser(req, res) {
