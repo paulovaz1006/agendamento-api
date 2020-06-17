@@ -1,10 +1,10 @@
 const connection = require('../../database/connection');
 
 class UserModel {
-    allUser(res) {
-        const sql = 'SELECT * FROM users';
+    allUser(id, res) {
+        const sql = 'SELECT * FROM users WHERE id_company = ?';
 
-        connection.query(sql, (error, response) => {
+        connection.query(sql, id, (error, response) => {
             if (error) {
                 console.log(error);
             } else {
