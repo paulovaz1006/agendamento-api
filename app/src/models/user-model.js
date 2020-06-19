@@ -18,12 +18,11 @@ class UserModel {
 
         connection.query(sql, data, (error, response) => {
             if (error) {
-                if (error.sqlState == 23000) {
-                    res.status(400).json({error, message: 'Este e-mail ja foi utilizado'});
+                if (error.sqlState == '23000') {
+                    res.status(400).json({message: 'Este e-mail ja foi utilizado'});
                 } else {
                     res.status(400).json({error, message: 'Erro ao cadastrar'});
-                }
-                console.log(error)
+                }                
             } else {
                 res.status(200).json({
                     user:data,
