@@ -13,9 +13,11 @@ class TableSchedule {
             id_user INT NOT NULL,
             id_company INT NOT NULL,
             id_service INT NOT NULL,
+            id_type_schedule INT NOT NULL,
             FOREIGN KEY(id_user) REFERENCES users(id_user),
             FOREIGN KEY(id_service) REFERENCES service(id_service),
-            FOREIGN KEY(id_company) REFERENCES company(id_company)
+            FOREIGN KEY(id_company) REFERENCES company(id_company),
+            FOREIGN KEY(id_type_schedule) REFERENCES type_schedule(id_type_schedule)
         )`;
 
         this.connection.query(sql, error => {

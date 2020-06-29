@@ -3,27 +3,16 @@ class ScheduleModel {
     allSchedule(id, res) {
         return new Promise ((resolve, reject) => {
             const sql = `SELECT  
-            schedule.id_schedule,
-            schedule.title,
-            schedule.description,
+            schedule.id_schedule,            
             schedule.date,
-            schedule.id_user,
-            schedule.id_service,
-            schedule.id_company,
             users.full_name,
-            users.phone,
-            users.email,
-            users.rg,
-            users.cpf,
-            users.address,
-            users.city,
-            company.name,
-            service.service 
+            users.id_user
             FROM schedule 
-            INNER JOIN users             
-            INNER JOIN company             
+            INNER JOIN users                
             INNER JOIN service
-            WHERE users.id_company = ? 
+            WHERE schedule.id_type_schedule = 2
+            AND schedule.id_company = ?
+            AND users.id_user = schedule.id_user
             GROUP BY schedule.id_schedule`;
     
             connection.query(sql, id, (error, response) => {
@@ -41,9 +30,9 @@ class ScheduleModel {
 
         connection.query(sql, data, (error) => {
             if (error) {
-                console.log(error);
+                res.status(400).json({message: 'Erro no agendamento', error: error});
             } else {
-                res.status(200).json({message: 'Cadastrado com sucesso'});
+                res.status(200).json({message: 'Agendado com sucesso'});
             }
         })
     }
@@ -76,6 +65,7 @@ class ScheduleModel {
                     INNER JOIN company             
                     INNER JOIN service
                     WHERE schedule.id_schedule = ? 
+                    AND schedule.id_type_schedule = 2
                     GROUP BY schedule.id_schedule`;
                 infoSchedule = id;                
                 break;
@@ -94,6 +84,40 @@ class ScheduleModel {
                 console.log(error);
             } else {
                 res.status(200).json(response);
+            }
+        });
+    }
+
+    scheduleToday(id, res) {
+        const sql = `SELECT  
+        schedule.id_type_schedule,
+        schedule.id_schedule,
+        schedule.title,
+        schedule.description,
+        schedule.date,
+        users.full_name,
+        service.service 
+        FROM schedule 
+        INNER JOIN users             
+        INNER JOIN company             
+        INNER JOIN service
+        WHERE users.id_company = ?        
+        AND (schedule.id_type_schedule = 2 OR schedule.id_type_schedule = 3) 
+        AND users.id_user = schedule.id_user    
+        AND service.id_service = schedule.id_service 
+        GROUP BY schedule.id_schedule
+        AND DATE_FORMAT(date, '%Y-%m-%d') = CURDATE()   
+        ORDER BY date`;    
+
+        connection.query(sql, id, (error, response) => {
+            if (error) {
+                console.log(error);
+            } else {
+                if (response.length > 0) {
+                    res.status(200).json(response);
+                } else {
+                    res.status(200).json({message:'Sem agendamentos hoje'});
+                }                
             }
         });
     }

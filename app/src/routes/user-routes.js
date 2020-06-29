@@ -2,9 +2,7 @@ const passport = require('passport');
 const UserController = require('../controllers/user-controller');
 
 module.exports = app => {
-    app.route('/user')
-        .get((req, res) => UserController.allUser(req, res))
-        .post((req, res) => UserController.registerUser(req, res));
+    app.post('/user', (req, res) => UserController.registerUser(req, res));
     
     app.route('/user/:id')
         .get(passport.authenticate('bearer', { session: false }), (req, res) => UserController.getUser(req, res))        

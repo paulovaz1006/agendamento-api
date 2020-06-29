@@ -12,7 +12,7 @@ class UserController {
         const company = req.body.company.toLowerCase();
         const searchCompany = await CompanyController.searchCompany(company, res);     
 
-        if (searchCompany) {
+        if (searchCompany) {           
             const newPassword =  await UserController.generatePassword(req.body.password);
             const data = req.body;
 

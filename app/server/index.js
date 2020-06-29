@@ -4,6 +4,7 @@ const TableCompany = require('../database/table-company');
 const TableTypeUser = require('../database/table-type-user');
 const TableService = require('../database/table-service');
 const TableUser = require('../database/table-user');
+const TableTypeSchedule = require('../database/table-type-schedule');
 const TableSchedule = require('../database/table-schedule');
 
 connection.connect((error) => {
@@ -14,6 +15,7 @@ connection.connect((error) => {
         TableTypeUser.init(connection);
         TableService.init(connection);
         TableUser.init(connection);
+        TableTypeSchedule.init(connection);
         TableSchedule.init(connection);
 
         const app = customExpress();

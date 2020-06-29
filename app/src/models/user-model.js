@@ -2,7 +2,21 @@ const connection = require('../../database/connection');
 
 class UserModel {
     allUser(id, res) {
-        const sql = 'SELECT * FROM users WHERE id_company = ?';
+        const sql = `SELECT 
+            users.id_user, 
+            users.full_name, 
+            users.phone, 
+            users.email, 
+            users.rg, 
+            users.cpf,
+            users.address,
+            users.city,
+            users.number,
+            company.name as company 
+            FROM users INNER JOIN company 
+            WHERE users.id_company = ? 
+            AND users.type_user = 1 
+            AND company.id_company = users.id_company`;
 
         connection.query(sql, id, (error, response) => {
             if (error) {

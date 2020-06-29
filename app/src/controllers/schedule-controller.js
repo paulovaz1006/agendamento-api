@@ -17,6 +17,13 @@ class ScheduleController {
         const method = req.method.toLowerCase();
         ScheduleModel.scheduling(data, id, method, res);
     }
+
+    scheduleToday(req, res) {
+        
+        const id = req.params.id_company;
+        
+        ScheduleModel.scheduleToday(id, res);
+    }
 }
 
 module.exports = new ScheduleController;
