@@ -6,6 +6,7 @@ const TableService = require('../database/table-service');
 const TableUser = require('../database/table-user');
 const TableTypeSchedule = require('../database/table-type-schedule');
 const TableSchedule = require('../database/table-schedule');
+const port = 3300;
 
 connection.connect((error) => {
     if (error) {
@@ -20,7 +21,7 @@ connection.connect((error) => {
 
         const app = customExpress();
 
-        app.listen(3300, () => console.log('run server'));
+        app.listen(port, () => console.log(`Run server ${port}`));
     }
 });
 

@@ -1,3 +1,4 @@
+const moment = require('moment');
 const ScheduleModel = require('../models/schedule-model');
 
 class ScheduleController {
@@ -19,10 +20,19 @@ class ScheduleController {
     }
 
     scheduleToday(req, res) {
-        
+        const date = new Date();
+        const formatDate = moment(date).format('YYYY-MM-DD');
         const id = req.params.id_company;
-        
-        ScheduleModel.scheduleToday(id, res);
+
+        ScheduleModel.scheduleToday(id, formatDate, res);
+    }
+
+    scheduleDateSelected(req, res) {
+        const formatDate = moment(req.params.date).format('YYYY-MM-DD');
+        const id = req.params.id_company;
+        const date = formatDate;
+
+        ScheduleModel.scheduleDateSelected(id, date, res);
     }
 }
 
